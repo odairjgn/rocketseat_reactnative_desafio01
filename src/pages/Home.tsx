@@ -14,6 +14,10 @@ export function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   function handleAddTask(newTaskTitle: string) {
+
+    if (!newTaskTitle)
+      return;
+
     let newTask = {
       id: new Date().getTime(),
       title: newTaskTitle,
@@ -28,15 +32,12 @@ export function Home() {
 
     if (target) {
       target.done = !target.done;
-      setTasks(tasks);
+      setTasks([...tasks]);
     }
   }
 
   function handleRemoveTask(id: number) {
-    let index = tasks.findIndex(x => x.id === id);
-
-    if (index > -1)
-      setTasks(tasks.splice(index, 1));
+    setTasks(tasks.filter(x => x.id !== id));
   }
 
   return (
